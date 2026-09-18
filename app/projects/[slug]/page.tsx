@@ -141,12 +141,12 @@ export default async function ProjectPage({ params }: Props) {
         </header>
 
         {project.cover ? (
-          <div className="bleed-band mt-14 md:mt-20">
+          <div className="mt-14 md:mt-20">
             <Recorded>
               <figure>
-                <div className="print-frame">
+                <div className="print-frame print-cover">
                   <span className="tape tl" aria-hidden="true" />
-                  <Picture picture={project.cover} sizes="(max-width: 767px) 92vw, 88vw" priority />
+                  <Picture picture={project.cover} sizes="(max-width: 767px) 92vw, 58vw" priority />
                   <span className="tape br" aria-hidden="true" />
                 </div>
                 {project.cover.caption ? (

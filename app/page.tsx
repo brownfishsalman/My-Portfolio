@@ -129,9 +129,7 @@ export default async function Home() {
           ) : (
             <div className="mt-12 grid gap-16 md:mt-16 md:gap-20">
               {lead ? (
-                <div className="bleed-band">
-                  <Print project={lead} lead priority />
-                </div>
+                <Print project={lead} lead priority />
               ) : null}
               {rest.length ? (
                 <div className="grid gap-14 md:grid-cols-2 md:gap-12">

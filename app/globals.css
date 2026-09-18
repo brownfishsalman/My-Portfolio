@@ -762,17 +762,19 @@ a.print:hover .print-title {
   margin-top: 2px;
 }
 
-/* The lead print pastes over part of the chart band */
+/* Cover prints (the lead on the home roll, the cover on a project roll) are
+   cropped to a landscape frame so a tall photo never runs down the roll or
+   over the channel band. */
+.print-cover img {
+  aspect-ratio: 16 / 9;
+  height: auto;
+  object-fit: cover;
+}
 .print-lead {
   width: 100%;
 }
-@media (min-width: 768px) {
-  .print-lead {
-    width: calc(100% - var(--band) * 0.42);
-  }
-  .print-lead .print-caption {
-    max-width: 60ch;
-  }
+.print-lead .print-caption {
+  max-width: 60ch;
 }
 
 /* Tape strips on prints */

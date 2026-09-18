@@ -18,7 +18,7 @@ export function Print({ project, lead = false, priority }: Props) {
     <Recorded>
       <Link href={href} className="print">
         <article className={lead ? "print-lead" : undefined}>
-          <div className="print-frame">
+          <div className={lead ? "print-frame print-cover" : "print-frame"}>
             <span className="tape tl" aria-hidden="true" />
             {project.cover ? (
               <Picture picture={project.cover} sizes={lead ? "(max-width: 767px) 90vw, 55vw" : "(max-width: 767px) 90vw, 28vw"} priority={priority} />
