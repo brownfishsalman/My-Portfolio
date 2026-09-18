@@ -46,7 +46,6 @@ export default async function Home() {
   ]);
   const [first, last] = splitName(settings.name);
   const [lead, ...rest] = featured;
-  const year = new Date().getFullYear();
   const showMeta = settings.degree || settings.university || settings.yearLabel || settings.location;
 
   return (
@@ -277,9 +276,6 @@ export default async function Home() {
               <div className="border border-dashed border-ink-faint p-7 md:p-9">
                 <p className="display text-[34px] font-semibold md:text-[40px]">Curriculum vitae</p>
                 <p className="data mt-3 text-[10.5px] uppercase tracking-wider text-ink-muted">Tear-off · PDF</p>
-                <p className="mt-4 max-w-[34ch] text-[15.5px] text-ink-muted">
-                  The same record in the order a reviewer expects.
-                </p>
                 <p className="mt-7">
                   {settings.cvUrl ? (
                     <a className="action pen" href={settings.cvUrl} download>
@@ -299,7 +295,6 @@ export default async function Home() {
               {settings.name}
               {settings.footerNote ? ` · ${settings.footerNote}` : ""}
             </span>
-            <span>{year}</span>
           </footer>
         </section>
       </Paper>
