@@ -867,9 +867,9 @@ html.js .recorded[data-recorded="true"] {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
-  margin-top: 10px;
-  padding: 10px 12px 8px;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 14px 18px 11px;
   border: 1px solid var(--grid-major);
   border-radius: 4px;
   color: var(--pen);
@@ -882,8 +882,8 @@ html.js .recorded[data-recorded="true"] {
   transition: background-color 160ms var(--ease-out), color 160ms var(--ease-out), border-color 160ms var(--ease-out);
 }
 .pub-file svg {
-  width: 26px;
-  height: 26px;
+  width: 36px;
+  height: 36px;
   stroke-width: 1.5;
 }
 .pub-file:hover {
@@ -892,7 +892,11 @@ html.js .recorded[data-recorded="true"] {
   color: var(--paper-deep);
 }
 .log-dates:has(.pub-file) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding-top: 2px;
+  margin-right: -28px; /* span the gap too, so the tile centres in the whole blank space before the title */
 }
 @media (max-width: 767px) {
   .pub-file {
