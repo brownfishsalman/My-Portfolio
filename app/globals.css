@@ -25,6 +25,7 @@
     4px 16px 36px rgba(0, 0, 0, 0.6);
 
   --margin: 56px;
+  --gutter: 28px; /* breathing room between the margin numerals and the text */
   --band: 34cqw; /* container-query width of the paper, so it resolves the same everywhere */
   --band-gap: 40px;
   --carriage: 72;
@@ -76,6 +77,7 @@
 @media (max-width: 767px) {
   :root {
     --margin: 20px;
+    --gutter: 12px;
     --band: 40px;
     --band-gap: 16px;
     --bezel: 44px;
@@ -233,6 +235,7 @@ a {
 .field {
   position: relative;
   min-height: 100vh;
+  padding-left: var(--gutter);
   padding-right: calc(var(--band) + var(--band-gap));
 }
 .field-band {
@@ -539,8 +542,8 @@ html.js .recorded[data-recorded="true"] {
 }
 .rule-heading::before {
   content: "";
-  flex: 0 0 var(--margin);
-  margin-left: calc(-1 * var(--margin) - 1px);
+  flex: 0 0 calc(var(--margin) + var(--gutter));
+  margin-left: calc(-1 * (var(--margin) + var(--gutter)) - 1px);
   border-top: 1px solid var(--pen);
   height: 0;
 }
@@ -552,7 +555,7 @@ html.js .recorded[data-recorded="true"] {
 }
 .rule-heading .event {
   position: absolute;
-  left: calc(-1 * var(--margin) + 10px);
+  left: calc(-1 * (var(--margin) + var(--gutter)) + 10px);
   bottom: calc(100% + 8px);
   writing-mode: vertical-rl;
   transform: rotate(180deg); /* reads upward, ending at the tick, like a margin annotation */
@@ -920,7 +923,7 @@ html.js .recorded[data-recorded="true"] {
 /* Tear-off line at the end of the record */
 .tear {
   position: relative;
-  margin-left: calc(-1 * var(--margin));
+  margin-left: calc(-1 * (var(--margin) + var(--gutter)));
   margin-right: calc(-1 * (var(--band) + var(--band-gap) + var(--margin)));
   height: 0;
   border-top: 2px dashed var(--ink-faint);
