@@ -179,7 +179,20 @@ export default async function Home() {
               {publications.map((pub, i) => (
                 <Recorded key={`${pub.title}-${i}`}>
                   <div className="log-row">
-                    <div className="log-dates">{pub.date ? formatMonth(pub.date) : ""}</div>
+                    <div className="log-dates">
+                      {pub.date ? <div>{formatMonth(pub.date)}</div> : null}
+                      {pub.pdfUrl ? (
+                        <a className="pub-file" href={pub.pdfUrl} target="_blank" rel="noopener noreferrer" aria-label={`Open PDF: ${pub.title}`}>
+                          <FileText aria-hidden="true" />
+                          <span>PDF</span>
+                        </a>
+                      ) : pub.url ? (
+                        <a className="pub-file" href={pub.url} target="_blank" rel="noopener noreferrer" aria-label={`Open: ${pub.title}`}>
+                          <ArrowUpRight aria-hidden="true" />
+                          <span>{pub.url.includes("doi.org") ? "DOI" : "Read"}</span>
+                        </a>
+                      ) : null}
+                    </div>
                     <div>
                       <h3 className="log-title">{pub.title}</h3>
                       {pub.authors || pub.venue ? (
@@ -190,18 +203,11 @@ export default async function Home() {
                         </p>
                       ) : null}
                       {pub.summary ? <p className="log-desc">{pub.summary}</p> : null}
-                      {pub.url || pub.pdfUrl ? (
+                      {pub.url && pub.pdfUrl ? (
                         <div className="print-links mt-3">
-                          {pub.url ? (
-                            <a href={pub.url} target="_blank" rel="noopener noreferrer">
-                              {pub.url.includes("doi.org") ? "DOI" : "Read"} <ArrowUpRight aria-hidden="true" width={14} height={14} />
-                            </a>
-                          ) : null}
-                          {pub.pdfUrl ? (
-                            <a href={pub.pdfUrl} target="_blank" rel="noopener noreferrer">
-                              PDF <FileText aria-hidden="true" width={14} height={14} />
-                            </a>
-                          ) : null}
+                          <a href={pub.url} target="_blank" rel="noopener noreferrer">
+                            {pub.url.includes("doi.org") ? "DOI" : "Read online"} <ArrowUpRight aria-hidden="true" width={14} height={14} />
+                          </a>
                         </div>
                       ) : null}
                     </div>
