@@ -542,7 +542,7 @@ html.js .recorded[data-recorded="true"] {
 }
 .rule-heading::before {
   content: "";
-  flex: 0 0 calc(var(--margin) + var(--gutter));
+  flex: 0 0 calc(var(--margin) + var(--gutter) - 18px); /* the 18px gap lands the title on the content edge */
   margin-left: calc(-1 * (var(--margin) + var(--gutter)) - 1px);
   border-top: 1px solid var(--pen);
   height: 0;
@@ -862,6 +862,20 @@ html.js .recorded[data-recorded="true"] {
   }
 }
 
+/* Skills: one inked line of terms */
+.skills {
+  font-size: 16px;
+  line-height: 1.7;
+  max-width: 60ch;
+}
+.skills span::after {
+  content: " · ";
+  color: var(--ink-faint);
+}
+.skills span:last-child::after {
+  content: "";
+}
+
 /* Skills calibration table */
 .cal {
   width: 100%;
@@ -951,7 +965,7 @@ html.js .recorded[data-recorded="true"] {
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 16px 0;
+  padding: 9px 0;
   border-top: 1px solid var(--grid-major);
   color: var(--ink);
   text-decoration: none;

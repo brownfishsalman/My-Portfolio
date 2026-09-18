@@ -45,18 +45,19 @@ function Carriage() {
       <div className="carriage-tick left" />
       <div className="carriage-line" />
       <div className="carriage-band">
-        <Nib left="calc(0% + 6px)" color="var(--pen)" />
-        <Nib left="calc(33.333% + 6px)" color="var(--ink)" hideOnMobile />
-        <Nib left="calc(66.666% + 6px)" color="var(--ink-muted)" hideOnMobile />
+        <Nib index={1} left="calc(0% + 6px)" color="var(--pen)" />
+        <Nib index={2} left="calc(33.333% + 6px)" color="var(--ink)" hideOnMobile />
+        <Nib index={3} left="calc(66.666% + 6px)" color="var(--ink-muted)" hideOnMobile />
       </div>
       <div className="carriage-tick right" />
     </div>
   );
 }
 
-function Nib({ left, color, hideOnMobile }: { left: string; color: string; hideOnMobile?: boolean }) {
+function Nib({ index, left, color, hideOnMobile }: { index: number; left: string; color: string; hideOnMobile?: boolean }) {
   return (
     <svg
+      data-nib={index}
       className={hideOnMobile ? "hidden md:block" : ""}
       style={{ position: "absolute", left, top: -1, transform: "translate(-50%, -100%)" }}
       width="12"

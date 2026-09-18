@@ -104,6 +104,24 @@ export function ChannelBand({ sections }: Props) {
           a3.push(`${cmd}${x3.toFixed(1)} ${y}`);
         }
       }
+      // Finish each trace exactly at the carriage and park each pen's nib where its trace ends.
+      const cy = Math.max(0, Math.min(height, carriage()));
+      const vEnd = Math.max(0, samples[maxStep]);
+      const xEnd1 = inset + span * (1 - Math.exp(-vEnd / 2.5));
+      const xEnd2 = laneW + inset + (span * sectionIdx) / Math.max(1, sectionTops.length);
+      const xEnd3 = laneW * 2 + inset + (span * cy) / Math.max(1, height);
+      a1.push(`L${xEnd1.toFixed(1)} ${cy.toFixed(1)}`);
+      if (lanes === 3) {
+        a2.push(`L${xEnd2.toFixed(1)} ${cy.toFixed(1)}`);
+        a3.push(`L${xEnd3.toFixed(1)} ${cy.toFixed(1)}`);
+      }
+      const nibs = document.querySelectorAll<HTMLElement>(".carriage-band [data-nib]");
+      const xs = [xEnd1, xEnd2, xEnd3];
+      nibs.forEach((nib) => {
+        const k = Number(nib.dataset.nib) - 1;
+        if (xs[k] !== undefined) nib.style.left = `${xs[k].toFixed(1)}px`;
+      });
+
       const reached = maxStep * STEP;
       labels.current?.querySelectorAll('text').forEach((t, i) => {
         t.setAttribute('opacity', sectionTops[i] - bandTop <= reached ? '1' : '0');

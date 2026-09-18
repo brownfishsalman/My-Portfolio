@@ -47,6 +47,7 @@ export default async function Home() {
   const [first, last] = splitName(settings.name);
   const [lead, ...rest] = featured;
   const showMeta = settings.degree || settings.university || settings.yearLabel || settings.location;
+  const allSkills = skills.flatMap((g) => g.skills);
 
   return (
     <>
@@ -153,15 +154,31 @@ export default async function Home() {
         <section id="about" className="pt-24 md:pt-32">
           <RuleHeading event="run · about">About</RuleHeading>
           <div className="mt-12 grid items-start gap-12 md:grid-cols-[minmax(0,1fr)_240px] md:gap-16">
-            <Recorded>
-              {settings.bio?.length ? (
-                <RichText value={settings.bio} />
-              ) : (
-                <p className="empty">
-                  No bio yet. Write two or three short paragraphs in the admin panel: <b>Site settings → Bio</b>.
-                </p>
-              )}
-            </Recorded>
+            <div>
+              <Recorded>
+                {settings.bio?.length ? (
+                  <RichText value={settings.bio} />
+                ) : (
+                  <p className="empty">
+                    No bio yet. Write two or three short paragraphs in the admin panel: <b>Site settings → Bio</b>.
+                  </p>
+                )}
+              </Recorded>
+              <Recorded className="mt-10">
+                <h3 className="display text-[22px] font-semibold tracking-wide">Skills</h3>
+                {allSkills.length === 0 ? (
+                  <p className="empty mt-5">
+                    No skills yet. Add them in the admin panel under <b>Skills</b>.
+                  </p>
+                ) : (
+                  <p className="skills mt-4">
+                    {allSkills.map((s) => (
+                      <span key={s}>{s}</span>
+                    ))}
+                  </p>
+                )}
+              </Recorded>
+            </div>
             {settings.portrait ? (
               <Recorded>
                 <div className="print-frame max-w-[240px]">
@@ -172,29 +189,6 @@ export default async function Home() {
             ) : null}
           </div>
 
-          <Recorded className="mt-16 md:mt-20">
-            <h3 className="display text-[22px] font-semibold tracking-wide">Skills</h3>
-            {skills.length === 0 ? (
-              <p className="empty mt-6">
-                No skill groups yet. Add one in the admin panel under <b>Skill groups</b>.
-              </p>
-            ) : (
-              <table className="cal mt-6">
-                <tbody>
-                  {skills.map((g) => (
-                    <tr key={g.title}>
-                      <th scope="row">{g.title}</th>
-                      <td>
-                        {g.skills.map((s) => (
-                          <span key={s}>{s}</span>
-                        ))}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
-          </Recorded>
         </section>
 
         {/* ---- Experience log ---- */}
