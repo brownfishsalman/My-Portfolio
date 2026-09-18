@@ -253,6 +253,23 @@ A charcoal paper stack, a three-step warm-white ink ramp, and one vermilion pen;
 
 **The Print-Side Palette Rule.** Anything drawn on print paper (figures, stills) uses the figure palette (dark ink, darker vermilion, light grid). Screen ink colours never appear on a print.
 
+### Daylight paper (light mode)
+
+The same recorder under the lamp. Every token above has a daylight value set on `:root[data-theme="light"]` in `app/globals.css`; no component knows which paper it is on. The lamp switch in the bezel (`components/recorder/Lamp.tsx`) toggles `data-theme` and remembers the choice in `localStorage`; before a choice exists the system preference decides, applied before first paint by the `beforeInteractive` script in `app/layout.tsx`.
+
+| Token | Night (default) | Daylight |
+|---|---|---|
+| `paper` | `#111417` | `#f4f1ea` warm ivory |
+| `paper-deep` | `#0b0d10` | `#e9e5db` |
+| `grid-minor` / `grid-major` | `#1c2126` / `#262c33` | `#e6e2d8` / `#d7d2c5` |
+| `hole` / `hole-rim` | `#07090b` / `#232930` | `#d4cec0` / `#c2bbab` |
+| `ink` / `ink-muted` / `ink-faint` | `#e6e8eb` / `#8b9096` / `#4a5058` | `#1e1c18` / `#6b665d` / `#b1ab9e` |
+| `pen` / `pen-deep` | `#ff5a3c` / `#c8402a` | `#c93a1b` / `#9e2d14` (deeper, for 4.5:1 on ivory) |
+| `print-paper` | `#dfe3e8` | `#fcfbf8` |
+| `print-shadow` / `print-shadow-lift` | black at .25/.55 | warm umber at .14/.22 |
+
+**The Same Pen Rule.** Daylight changes the paper and the ink, never the grammar: the pen is still the only accent, prints are still the only lifted surface, and the figure palette on prints is unchanged. A new token needs a value for both papers before it ships.
+
 ## Typography
 
 **Display Font:** Barlow Condensed (with Arial Narrow, sans-serif), weights 500/600/700 loaded; 600 and 700 used.

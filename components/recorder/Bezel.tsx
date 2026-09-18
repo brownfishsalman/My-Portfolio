@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Lamp } from "./Lamp";
 
 type Props = { name: string; cvUrl?: string };
 
@@ -25,6 +26,7 @@ export function Bezel({ name, cvUrl }: Props) {
             CV
           </a>
         ) : null}
+        <Lamp />
       </nav>
     </header>
   );

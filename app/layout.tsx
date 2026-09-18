@@ -39,8 +39,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${barlow.variable} ${barlowCondensed.variable} ${b612Mono.variable} h-full`} suppressHydrationWarning>
       <body className="min-h-full">
-        {/* Marks the document as JS-capable before first paint so the stamp reveal never hides content without JS. */}
-        <Script id="js-capable" strategy="beforeInteractive">{"document.documentElement.classList.add('js')"}</Script>
+        {/* Before first paint: mark the document JS-capable (the stamp reveal never hides content without JS)
+            and apply the paper theme: the visitor's saved lamp setting, else their system preference. */}
+        <Script id="js-capable" strategy="beforeInteractive">
+          {`document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark'){t=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'}document.documentElement.dataset.theme=t}catch(e){}`}
+        </Script>
         {children}
       </body>
     </html>

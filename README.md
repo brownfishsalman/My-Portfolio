@@ -8,6 +8,8 @@ A personal portfolio site with an admin panel. You write text, upload photos and
 
 Everything you see on the site is editable in the admin panel: name, tagline, bio, portrait, projects (with galleries and video), skills, experience, contact links and the CV.
 
+The site has two papers: night (dark) and daylight (warm ivory). The **Lamp** switch in the top bar flips between them and remembers the visitor's choice; first-time visitors get whichever matches their device setting.
+
 ---
 
 ## Step 1 — run it on your PC

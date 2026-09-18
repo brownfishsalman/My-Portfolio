@@ -1,0 +1,5 @@
+http://localhost:3000/studio/structure
+editor
+
+http://localhost:3000/
+live link
