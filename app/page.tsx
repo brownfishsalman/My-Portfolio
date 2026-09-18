@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowDown, ArrowUpRight, Briefcase, Code, Download, Mail } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Briefcase, Code, Download, FileText, Mail } from "lucide-react";
 import { Bezel } from "@/components/recorder/Bezel";
 import { Legend } from "@/components/recorder/Legend";
 import { Paper } from "@/components/recorder/Paper";
@@ -8,14 +8,15 @@ import { Picture } from "@/components/Picture";
 import { Print } from "@/components/Print";
 import { RichText } from "@/components/RichText";
 import { RuleHeading } from "@/components/RuleHeading";
-import { getExperience, getFeaturedProjects, getProjects, getSettings, getSkills, usingPlaceholders } from "@/lib/content";
-import { formatRange } from "@/lib/format";
-import { KIND_LABEL } from "@/lib/types";
+import { getExperience, getFeaturedProjects, getProjects, getPublications, getSettings, getSkills, usingPlaceholders } from "@/lib/content";
+import { formatMonth, formatRange } from "@/lib/format";
+import { KIND_LABEL, PUBLICATION_KIND_LABEL, PUBLICATION_STATUS_LABEL } from "@/lib/types";
 
 export const revalidate = 60;
 
 const SECTIONS = [
   { id: "projects", label: "Projects" },
+  { id: "research", label: "Research" },
   { id: "about", label: "About" },
   { id: "experience", label: "Experience" },
   { id: "contact", label: "Contact" },
@@ -37,13 +38,21 @@ function hostOf(url: string): string {
 }
 
 export default async function Home() {
-  const [settings, featured, all, skills, experience] = await Promise.all([
+  const [settings, featured, all, publications, skills, experience] = await Promise.all([
     getSettings(),
     getFeaturedProjects(),
     getProjects(),
+    getPublications(),
     getSkills(),
     getExperience(),
   ]);
+  // On the live site an empty section is simply not printed; the empty-state hints only show before Sanity is connected.
+  const show = {
+    projects: featured.length > 0 || usingPlaceholders,
+    research: publications.length > 0 || usingPlaceholders,
+    experience: experience.length > 0 || usingPlaceholders,
+  };
+  const sections = SECTIONS.filter((s) => (s.id in show ? show[s.id as keyof typeof show] : true));
   const [first, last] = splitName(settings.name);
   const [lead, ...rest] = featured;
   const showMeta = settings.degree || settings.university || settings.yearLabel || settings.location;
@@ -51,8 +60,8 @@ export default async function Home() {
 
   return (
     <>
-      <Bezel name={settings.name} cvUrl={settings.cvUrl} />
-      <Paper sections={SECTIONS}>
+      <Bezel name={settings.name} cvUrl={settings.cvUrl} nav={show} />
+      <Paper sections={sections}>
         <Legend />
 
         {/* ---- Chart header: name stamp, tagline, actions ---- */}
@@ -121,6 +130,7 @@ export default async function Home() {
         </section>
 
         {/* ---- Featured projects ---- */}
+        {show.projects ? (
         <section id="projects" className="pt-16 md:pt-[120px]">
           <RuleHeading event="run · featured projects" count={featured.length ? `${featured.length} prints` : undefined}>Featured projects</RuleHeading>
           {featured.length === 0 ? (
@@ -149,6 +159,64 @@ export default async function Home() {
             </p>
           ) : null}
         </section>
+        ) : null}
+
+        {/* ---- Research publications ---- */}
+        {show.research ? (
+        <section id="research" className="pt-24 md:pt-32">
+          <RuleHeading
+            event="run · research"
+            count={publications.length ? `${publications.length} ${publications.length === 1 ? "paper" : "papers"}` : undefined}
+          >
+            Research publications
+          </RuleHeading>
+          {publications.length === 0 ? (
+            <p className="empty mt-10">
+              No publications yet. Add a paper, preprint or thesis in the admin panel under <b>Research publications</b>.
+            </p>
+          ) : (
+            <div className="mt-10 md:mt-12">
+              {publications.map((pub, i) => (
+                <Recorded key={`${pub.title}-${i}`}>
+                  <div className="log-row">
+                    <div className="log-dates">{pub.date ? formatMonth(pub.date) : ""}</div>
+                    <div>
+                      <h3 className="log-title">{pub.title}</h3>
+                      {pub.authors || pub.venue ? (
+                        <p className="log-org">
+                          {pub.authors ? <span>{pub.authors}</span> : null}
+                          {pub.authors && pub.venue ? " · " : ""}
+                          {pub.venue ? <em>{pub.venue}</em> : null}
+                        </p>
+                      ) : null}
+                      {pub.summary ? <p className="log-desc">{pub.summary}</p> : null}
+                      {pub.url || pub.pdfUrl ? (
+                        <div className="print-links mt-3">
+                          {pub.url ? (
+                            <a href={pub.url} target="_blank" rel="noopener noreferrer">
+                              {pub.url.includes("doi.org") ? "DOI" : "Read"} <ArrowUpRight aria-hidden="true" width={14} height={14} />
+                            </a>
+                          ) : null}
+                          {pub.pdfUrl ? (
+                            <a href={pub.pdfUrl} target="_blank" rel="noopener noreferrer">
+                              PDF <FileText aria-hidden="true" width={14} height={14} />
+                            </a>
+                          ) : null}
+                        </div>
+                      ) : null}
+                    </div>
+                    <div className="flex gap-2 md:flex-col md:items-end">
+                      <span className="stamp">{PUBLICATION_KIND_LABEL[pub.kind]}</span>
+                      {PUBLICATION_STATUS_LABEL[pub.status] ? <span className="stamp">{PUBLICATION_STATUS_LABEL[pub.status]}</span> : null}
+                      {pub.isExample ? <span className="stamp example">Example</span> : null}
+                    </div>
+                  </div>
+                </Recorded>
+              ))}
+            </div>
+          )}
+        </section>
+        ) : null}
 
         {/* ---- About + skills ---- */}
         <section id="about" className="pt-24 md:pt-32">
@@ -192,6 +260,7 @@ export default async function Home() {
         </section>
 
         {/* ---- Experience log ---- */}
+        {show.experience ? (
         <section id="experience" className="pt-24 md:pt-32">
           <RuleHeading event="run · experience and education" count={experience.length ? `${experience.length} entries` : undefined}>Experience &amp; education</RuleHeading>
           {experience.length === 0 ? (
@@ -228,6 +297,7 @@ export default async function Home() {
             </div>
           )}
         </section>
+        ) : null}
 
         {/* ---- End of record: contact + CV tear-off ---- */}
         <section id="contact" className="pt-24 md:pt-32">

@@ -22,7 +22,7 @@ if (!projectId || !token) {
 const client = createClient({ projectId, dataset, token, apiVersion: "2026-09-01", useCdn: false });
 
 // The example content lives in lib/placeholders.ts; Node 24 runs TypeScript files directly.
-const { placeholderSettings, placeholderProjects, placeholderSkills, placeholderExperience } = await import(
+const { placeholderSettings, placeholderProjects, placeholderPublications, placeholderSkills, placeholderExperience } = await import(
   "../lib/placeholders.ts"
 );
 
@@ -100,6 +100,25 @@ for (const [i, p] of placeholderProjects.entries()) {
     links: withKeys(p.links.map((l) => ({ _type: "link", ...l }))),
   });
   console.log("  project:", p.title);
+}
+
+// 2b. Publications
+for (const [i, pub] of placeholderPublications.entries()) {
+  await client.createIfNotExists({
+    _id: `publication-example-${i + 1}`,
+    _type: "publication",
+    title: pub.title,
+    authors: pub.authors,
+    venue: pub.venue,
+    kind: pub.kind,
+    status: pub.status,
+    date: pub.date,
+    summary: pub.summary,
+    url: pub.url,
+    order: i + 1,
+    isExample: true,
+  });
+  console.log("  publication:", pub.title);
 }
 
 // 3. Skill groups

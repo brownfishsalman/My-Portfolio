@@ -28,6 +28,12 @@ export const projectsQuery = defineQuery(`*[_type == "project"]
 export const featuredProjectsQuery = defineQuery(`*[_type == "project" && featured == true]
   | order(coalesce(order, 999) asc, date desc)[0...3]{ ${projectFields} }`);
 
+export const publicationsQuery = defineQuery(`*[_type == "publication"] | order(coalesce(order, 999) asc, coalesce(date, "0000") desc){
+  title, authors, venue, kind, status, date, summary, url,
+  "pdfUrl": pdf.asset->url,
+  "isExample": coalesce(isExample, false)
+}`);
+
 export const skillsQuery = defineQuery(`*[_type == "skillGroup"] | order(coalesce(order, 999) asc, _createdAt asc){
   title, "skills": coalesce(skills, [])
 }`);

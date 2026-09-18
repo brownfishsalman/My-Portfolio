@@ -2,7 +2,7 @@
 // Sanity by `npm run seed` so the owner can edit or delete it from the admin panel.
 // Everything here is illustrative and is stamped EXAMPLE on the page.
 import type { PortableTextBlock } from "@portabletext/types";
-import type { Experience, Picture, Project, SiteSettings, SkillGroup } from "./types";
+import type { Experience, Picture, Project, Publication, SiteSettings, SkillGroup } from "./types";
 
 let keyCounter = 0;
 const key = () => `k${(keyCounter++).toString(36)}`;
@@ -134,6 +134,21 @@ export const placeholderProjects: Project[] = [
     ),
     isExample: true,
     links: [],
+  },
+];
+
+export const placeholderPublications: Publication[] = [
+  {
+    title: "Low-Cost Pressure Instrumentation for Undergraduate Wind-Tunnel Airfoil Experiments",
+    authors: "S. Saadiq, A. Example, B. Example",
+    venue: "Example Student Conference on Aerospace Engineering",
+    kind: "conference",
+    status: "published",
+    date: "2026-03-01",
+    summary:
+      "An eight-tap pressure rig built from hobby-grade sensors reproduces thin-airfoil Cp distributions within 10 % at Re ≈ 1.8 × 10⁵, at a tenth of the cost of a commercial scanner.",
+    url: "https://doi.org/10.0000/example",
+    isExample: true,
   },
 ];
 

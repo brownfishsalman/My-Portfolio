@@ -7,16 +7,18 @@ import {
   experienceQuery,
   featuredProjectsQuery,
   projectsQuery,
+  publicationsQuery,
   settingsQuery,
   skillsQuery,
 } from "./sanity/queries";
 import {
   placeholderExperience,
   placeholderProjects,
+  placeholderPublications,
   placeholderSettings,
   placeholderSkills,
 } from "./placeholders";
-import type { Experience, Picture, Project, SiteSettings, SkillGroup } from "./types";
+import type { Experience, Picture, Project, Publication, SiteSettings, SkillGroup } from "./types";
 
 export const usingPlaceholders = !isSanityConfigured;
 
@@ -36,6 +38,19 @@ type RawSettings = {
   portrait: RawPicture;
   cvUrl: string | null;
 } | null;
+
+type RawPublication = {
+  title: string | null;
+  authors: string | null;
+  venue: string | null;
+  kind: string | null;
+  status: string | null;
+  date: string | null;
+  summary: string | null;
+  url: string | null;
+  pdfUrl: string | null;
+  isExample: boolean;
+};
 
 type RawSkillGroup = { title: string | null; skills: string[] };
 
@@ -123,6 +138,23 @@ export async function getFeaturedProjects(): Promise<Project[]> {
   if (usingPlaceholders) return placeholderProjects.filter((p) => p.featured).slice(0, 3);
   const rows = await client.fetch<RawProject[]>(featuredProjectsQuery);
   return rows.map(project);
+}
+
+export async function getPublications(): Promise<Publication[]> {
+  if (usingPlaceholders) return placeholderPublications;
+  const rows = await client.fetch<RawPublication[]>(publicationsQuery);
+  return rows.map((r) => ({
+    title: r.title ?? "",
+    authors: r.authors ?? undefined,
+    venue: r.venue ?? undefined,
+    kind: (r.kind as Publication["kind"]) ?? "conference",
+    status: (r.status as Publication["status"]) ?? "published",
+    date: r.date ?? undefined,
+    summary: r.summary ?? undefined,
+    url: r.url ?? undefined,
+    pdfUrl: r.pdfUrl ?? undefined,
+    isExample: r.isExample,
+  }));
 }
 
 export async function getSkills(): Promise<SkillGroup[]> {

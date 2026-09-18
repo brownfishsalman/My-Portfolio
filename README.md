@@ -103,7 +103,8 @@ Every push to GitHub redeploys automatically. Content edits in the admin panel d
 | Email, GitHub, LinkedIn, CV (PDF), contact note | Site settings → Contact & CV |
 | A project: YouTube video (or cover photo), summary, tags, links | Projects → open one (or **Create**) |
 | Which projects appear on the home page | Project → Basics → **Show on home page** (max 3 shown) |
-| Skills | Skill groups |
+| Papers, preprints, theses, posters | Research publications |
+| Skills | Skills |
 | Degree, internships, roles, certificates, awards | Experience & education |
 
 Tips:

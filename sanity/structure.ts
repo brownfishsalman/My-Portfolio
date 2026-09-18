@@ -11,6 +11,7 @@ export const structure: StructureResolver = (S) =>
         .child(S.document().schemaType("siteSettings").documentId("siteSettings")),
       S.divider(),
       S.documentTypeListItem("project").title("Projects"),
-      S.documentTypeListItem("skillGroup").title("Skill groups"),
+      S.documentTypeListItem("publication").title("Research publications"),
+      S.documentTypeListItem("skillGroup").title("Skills"),
       S.documentTypeListItem("experience").title("Experience & education"),
     ]);

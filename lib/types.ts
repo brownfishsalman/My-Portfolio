@@ -45,6 +45,38 @@ export type Project = {
   isExample: boolean;
 };
 
+export type PublicationKind = "journal" | "conference" | "preprint" | "thesis" | "poster" | "talk";
+export type PublicationStatus = "published" | "accepted" | "review" | "preparation";
+
+export type Publication = {
+  title: string;
+  authors?: string;
+  venue?: string;
+  kind: PublicationKind;
+  status: PublicationStatus;
+  date?: string;
+  summary?: string;
+  url?: string;
+  pdfUrl?: string;
+  isExample: boolean;
+};
+
+export const PUBLICATION_KIND_LABEL: Record<PublicationKind, string> = {
+  journal: "Journal",
+  conference: "Conference",
+  preprint: "Preprint",
+  thesis: "Thesis",
+  poster: "Poster",
+  talk: "Talk",
+};
+
+export const PUBLICATION_STATUS_LABEL: Record<PublicationStatus, string> = {
+  published: "",
+  accepted: "Accepted",
+  review: "Under review",
+  preparation: "In preparation",
+};
+
 export type SkillGroup = { title: string; skills: string[] };
 
 export type ExperienceKind = "education" | "work" | "role" | "certificate" | "award";
