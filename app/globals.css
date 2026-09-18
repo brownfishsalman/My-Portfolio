@@ -762,13 +762,18 @@ a.print:hover .print-title {
   margin-top: 2px;
 }
 
-/* Cover prints (the lead on the home roll, the cover on a project roll) are
-   cropped to a landscape frame so a tall photo never runs down the roll or
-   over the channel band. */
+/* Cover prints (the lead on the home roll, the cover on a project roll) keep
+   the whole photo but are capped in height: the paper frame shrinks around
+   the image, so a tall photo never runs down the roll. */
+.print-cover {
+  width: fit-content;
+  max-width: 100%;
+}
 .print-cover img {
-  aspect-ratio: 16 / 9;
+  width: auto;
   height: auto;
-  object-fit: cover;
+  max-width: 100%;
+  max-height: min(480px, 60vh);
 }
 .print-lead {
   width: 100%;
