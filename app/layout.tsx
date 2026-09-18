@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { B612_Mono, Barlow, Barlow_Condensed } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const barlow = Barlow({
@@ -37,11 +38,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${barlow.variable} ${barlowCondensed.variable} ${b612Mono.variable} h-full`} suppressHydrationWarning>
-      <head>
+      <body className="min-h-full">
         {/* Marks the document as JS-capable before first paint so the stamp reveal never hides content without JS. */}
-        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
-      </head>
-      <body className="min-h-full">{children}</body>
+        <Script id="js-capable" strategy="beforeInteractive">{"document.documentElement.classList.add('js')"}</Script>
+        {children}
+      </body>
     </html>
   );
 }
