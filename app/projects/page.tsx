@@ -5,7 +5,6 @@ import { Paper } from "@/components/recorder/Paper";
 import { Print } from "@/components/Print";
 import { RuleHeading } from "@/components/RuleHeading";
 import { getProjects, getSettings } from "@/lib/content";
-import { today } from "@/lib/format";
 
 export const revalidate = 60;
 
@@ -20,13 +19,7 @@ export default async function ProjectsPage() {
     <>
       <Bezel name={settings.name} cvUrl={settings.cvUrl} />
       <Paper sections={[{ id: "all", label: "Projects" }]}>
-        <Legend
-          cells={[
-            { label: "Record", value: "All projects" },
-            { label: "Roll", value: "02" },
-            { label: "Recorded", value: today() },
-          ]}
-        />
+        <Legend />
         <section id="all" className="pb-24 pt-14 md:pt-20">
           <RuleHeading as="h1" event="all projects" count={projects.length ? `${projects.length} prints` : undefined}>
             Projects

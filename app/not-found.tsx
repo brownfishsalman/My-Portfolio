@@ -11,7 +11,7 @@ export default async function NotFound() {
     <>
       <Bezel name={settings.name} cvUrl={settings.cvUrl} />
       <Paper sections={[]}>
-        <Legend cells={[{ label: "Record", value: "Not found" }]} />
+        <Legend />
         <section className="flex min-h-[70vh] flex-col justify-center py-16">
           <h1 className="display" style={{ fontSize: "clamp(40px, 6vw, 84px)" }}>
             Nothing on this stretch of paper

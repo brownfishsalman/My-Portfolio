@@ -9,7 +9,7 @@ import { Print } from "@/components/Print";
 import { RichText } from "@/components/RichText";
 import { RuleHeading } from "@/components/RuleHeading";
 import { getExperience, getFeaturedProjects, getProjects, getSettings, getSkills, usingPlaceholders } from "@/lib/content";
-import { formatRange, today } from "@/lib/format";
+import { formatRange } from "@/lib/format";
 import { KIND_LABEL } from "@/lib/types";
 
 export const revalidate = 60;
@@ -53,14 +53,7 @@ export default async function Home() {
     <>
       <Bezel name={settings.name} cvUrl={settings.cvUrl} />
       <Paper sections={SECTIONS}>
-        <Legend
-          cells={[
-            { label: "Record", value: "Record of work" },
-            { label: "Roll", value: "01" },
-            { label: "Recorded", value: today() },
-            { label: "Paper speed", value: "scroll" },
-          ]}
-        />
+        <Legend />
 
         {/* ---- Chart header: name stamp, tagline, actions ---- */}
         <section className="flex min-h-[calc(100svh-var(--bezel)-150px)] flex-col justify-center py-14 md:py-16">

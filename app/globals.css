@@ -266,24 +266,6 @@ a {
   text-transform: uppercase;
   color: var(--ink-muted);
 }
-.legend-cells {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0 0;
-}
-.legend-cell {
-  padding: 10px 14px 10px 0;
-  margin-right: 14px;
-  border-right: 1px solid var(--grid-major);
-  white-space: nowrap;
-}
-.legend-cell:last-child {
-  border-right: 0;
-}
-.legend-cell b {
-  color: var(--ink);
-  font-weight: 400;
-}
 .legend-lanes {
   grid-column: 3;
   display: grid;
@@ -303,16 +285,6 @@ a {
   color: var(--ink);
 }
 @media (max-width: 767px) {
-  .legend-cell {
-    padding: 8px 8px 8px 0;
-    margin-right: 8px;
-  }
-  .legend-cell:nth-child(n + 3) {
-    display: none;
-  }
-  .legend-cell:nth-child(2) {
-    border-right: 0;
-  }
   .legend-lanes {
     grid-template-columns: 1fr;
   }

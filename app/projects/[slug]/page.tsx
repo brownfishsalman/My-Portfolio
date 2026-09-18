@@ -11,7 +11,7 @@ import { RichText } from "@/components/RichText";
 import { RuleHeading } from "@/components/RuleHeading";
 import { YouTube } from "@/components/YouTube";
 import { getProject, getProjectSlugs, getSettings } from "@/lib/content";
-import { formatMonth, today } from "@/lib/format";
+import { formatMonth } from "@/lib/format";
 import type { PortableTextBlock } from "@portabletext/types";
 
 export const revalidate = 60;
@@ -86,13 +86,7 @@ export default async function ProjectPage({ params }: Props) {
     <>
       <Bezel name={settings.name} cvUrl={settings.cvUrl} />
       <Paper sections={PHASES.map((p) => ({ id: p.id, label: p.title }))}>
-        <Legend
-          cells={[
-            { label: "Record", value: project.title },
-            ...(project.date ? [{ label: "Dated", value: formatMonth(project.date) }] : []),
-            { label: "Read", value: today() },
-          ]}
-        />
+        <Legend />
 
         <div className="pt-10 md:pt-14">
           <Link href="/projects" className="stamp" style={{ color: "var(--ink-muted)" }}>
