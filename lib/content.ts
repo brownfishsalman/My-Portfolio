@@ -6,8 +6,6 @@ import { isSanityConfigured } from "./sanity/env";
 import {
   experienceQuery,
   featuredProjectsQuery,
-  projectBySlugQuery,
-  projectSlugsQuery,
   projectsQuery,
   settingsQuery,
   skillsQuery,
@@ -18,7 +16,7 @@ import {
   placeholderSettings,
   placeholderSkills,
 } from "./placeholders";
-import type { Experience, Picture, Project, ProjectSummary, SiteSettings, SkillGroup } from "./types";
+import type { Experience, Picture, Project, SiteSettings, SkillGroup } from "./types";
 
 export const usingPlaceholders = !isSanityConfigured;
 
@@ -38,16 +36,6 @@ type RawSettings = {
   portrait: RawPicture;
   cvUrl: string | null;
 } | null;
-
-type RawProject = RawSummary & {
-  role: string | null;
-  youtubeUrl: string | null;
-  analysis: unknown;
-  build: unknown;
-  test: unknown;
-  gallery: RawPicture[] | null;
-  links: ({ label: string | null; url: string | null } | null)[] | null;
-};
 
 type RawSkillGroup = { title: string | null; skills: string[] };
 
@@ -95,7 +83,7 @@ export async function getSettings(): Promise<SiteSettings> {
   };
 }
 
-type RawSummary = {
+type RawProject = {
   slug: string | null;
   title: string | null;
   summary: string | null;
@@ -104,9 +92,11 @@ type RawSummary = {
   tags: string[];
   isExample: boolean;
   cover: RawPicture;
+  youtubeUrl: string | null;
+  links: ({ label: string | null; url: string | null } | null)[] | null;
 };
 
-function summary(p: RawSummary): ProjectSummary {
+function project(p: RawProject): Project {
   return {
     slug: p.slug ?? "",
     title: p.title ?? "Untitled project",
@@ -116,43 +106,23 @@ function summary(p: RawSummary): ProjectSummary {
     tags: p.tags,
     isExample: p.isExample,
     cover: pic(p.cover),
-  };
-}
-
-export async function getProjects(): Promise<ProjectSummary[]> {
-  if (usingPlaceholders) return placeholderProjects;
-  const rows = await client.fetch<RawSummary[]>(projectsQuery);
-  return rows.map(summary);
-}
-
-export async function getFeaturedProjects(): Promise<ProjectSummary[]> {
-  if (usingPlaceholders) return placeholderProjects.filter((p) => p.featured).slice(0, 3);
-  const rows = await client.fetch<RawSummary[]>(featuredProjectsQuery);
-  return rows.map(summary);
-}
-
-export async function getProjectSlugs(): Promise<string[]> {
-  if (usingPlaceholders) return placeholderProjects.map((p) => p.slug);
-  const slugs = await client.fetch<unknown[]>(projectSlugsQuery);
-  return slugs.filter((s): s is string => typeof s === "string");
-}
-
-export async function getProject(slug: string): Promise<Project | null> {
-  if (usingPlaceholders) return placeholderProjects.find((p) => p.slug === slug) ?? null;
-  const p = await client.fetch<RawProject | null>(projectBySlugQuery, { slug });
-  if (!p) return null;
-  return {
-    ...summary(p),
-    role: p.role ?? undefined,
     youtubeUrl: p.youtubeUrl ?? undefined,
-    gallery: (p.gallery ?? []).map(pic).filter((x): x is Picture => Boolean(x)),
     links: (p.links ?? [])
       .filter((l): l is { label: string; url: string } => Boolean(l?.label && l?.url))
       .map((l) => ({ label: l.label, url: l.url })),
-    analysis: (p.analysis as Project["analysis"]) ?? undefined,
-    build: (p.build as Project["build"]) ?? undefined,
-    test: (p.test as Project["test"]) ?? undefined,
   };
+}
+
+export async function getProjects(): Promise<Project[]> {
+  if (usingPlaceholders) return placeholderProjects;
+  const rows = await client.fetch<RawProject[]>(projectsQuery);
+  return rows.map(project);
+}
+
+export async function getFeaturedProjects(): Promise<Project[]> {
+  if (usingPlaceholders) return placeholderProjects.filter((p) => p.featured).slice(0, 3);
+  const rows = await client.fetch<RawProject[]>(featuredProjectsQuery);
+  return rows.map(project);
 }
 
 export async function getSkills(): Promise<SkillGroup[]> {

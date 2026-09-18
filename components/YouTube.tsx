@@ -18,6 +18,7 @@ type Props = {
  */
 export function YouTube({ url, title = "Project video", caption, example = false }: Props) {
   const [playing, setPlaying] = useState(false);
+  const [thumb, setThumb] = useState<"maxres" | "hq">("maxres");
   const id = youtubeId(url);
 
   if (!id) {
@@ -46,11 +47,20 @@ export function YouTube({ url, title = "Project video", caption, example = false
               {/* Example content shows an authored still in the world's ink; real links show the video's own thumbnail. */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={example ? "/placeholders/video.svg" : `https://i.ytimg.com/vi/${id}/hqdefault.jpg`}
+                src={
+                  example
+                    ? "/placeholders/video.svg"
+                    : `https://i.ytimg.com/vi/${id}/${thumb === "maxres" ? "maxresdefault" : "hqdefault"}.jpg`
+                }
                 alt=""
                 loading="lazy"
-                width={example ? 1600 : 480}
-                height={example ? 900 : 360}
+                width={example || thumb === "maxres" ? 1280 : 480}
+                height={example || thumb === "maxres" ? 720 : 360}
+                onLoad={(e) => {
+                  // YouTube answers a 120×90 grey card when a video has no maxres thumbnail.
+                  if (thumb === "maxres" && e.currentTarget.naturalWidth < 200) setThumb("hq");
+                }}
+                onError={() => setThumb("hq")}
               />
               <span className="video-play">
                 <Play aria-hidden="true" />

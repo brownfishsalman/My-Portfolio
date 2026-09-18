@@ -31,7 +31,8 @@ export type SiteSettings = {
   contactNote?: string;
 };
 
-export type ProjectSummary = {
+export type Project = {
+  /** Stable key; the admin panel no longer shows it. */
   slug: string;
   title: string;
   summary: string;
@@ -39,17 +40,9 @@ export type ProjectSummary = {
   featured: boolean;
   tags: string[];
   cover?: Picture;
-  isExample: boolean;
-};
-
-export type Project = ProjectSummary & {
-  role?: string;
   youtubeUrl?: string;
-  gallery: Picture[];
   links: Link[];
-  analysis?: PortableTextBlock[];
-  build?: PortableTextBlock[];
-  test?: PortableTextBlock[];
+  isExample: boolean;
 };
 
 export type SkillGroup = { title: string; skills: string[] };

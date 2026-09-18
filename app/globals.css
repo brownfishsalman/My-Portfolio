@@ -724,10 +724,6 @@ html.js .recorded[data-recorded="true"] {
   height: auto;
   background: var(--print-paper);
 }
-a.print:hover .print-frame {
-  transform: translateY(-3px) rotate(-0.4deg);
-  box-shadow: var(--print-shadow-lift);
-}
 .print-caption {
   margin-top: 14px;
   display: grid;
@@ -741,9 +737,6 @@ a.print:hover .print-frame {
   line-height: 1;
   text-transform: uppercase;
   color: var(--ink);
-}
-a.print:hover .print-title {
-  color: var(--pen);
 }
 .print-summary {
   color: var(--ink-muted);
@@ -780,6 +773,24 @@ a.print:hover .print-title {
 }
 .print-lead .print-caption {
   max-width: 60ch;
+}
+
+.print-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  margin-top: 6px;
+  font-size: 15px;
+}
+.print-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--pen);
+  text-decoration: none;
+}
+.print-links a:hover {
+  text-decoration: underline;
 }
 
 /* Tape strips on prints */

@@ -94,14 +94,9 @@ for (const [i, p] of placeholderProjects.entries()) {
     featured: p.featured,
     order: i + 1,
     tags: p.tags,
-    role: p.role,
     isExample: true,
     cover: await imageRef(p.cover),
-    gallery: withKeys(await Promise.all(p.gallery.map(imageRef))),
     youtubeUrl: p.youtubeUrl,
-    analysis: p.analysis,
-    build: p.build,
-    test: p.test,
     links: withKeys(p.links.map((l) => ({ _type: "link", ...l }))),
   });
   console.log("  project:", p.title);

@@ -81,35 +81,10 @@ export const placeholderProjects: Project[] = [
       "Simulated pitch step response beside the controller board layout",
     ),
     isExample: true,
-    role: "Sole designer: control design, electronics, firmware, flight test",
     youtubeUrl: "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
-    gallery: [
-      fig("uav-flight-controller.svg", "Flight controller figure", "Loop response and board layout"),
-      fig("airfoil-pressure-rig.svg", "Airframe section figure", "Wing section used for the trim calculations"),
-    ],
     links: [
       { label: "Firmware on GitHub", url: "https://github.com/your-handle/uav-flight-controller" },
       { label: "Design report (PDF)", url: "https://example.com/report.pdf" },
-    ],
-    analysis: [
-      block(
-        "The airframe's short-period pitch dynamics were identified from a doublet test and fitted to a second-order model (ωn ≈ 6 rad/s, ζ ≈ 0.55). A PID loop on pitch rate was tuned in Simulink to give an overshoot under 15 % with a peak time of about 0.6 s, leaving margin for the servo bandwidth.",
-      ),
-      ...bullets([
-        "Sensor fusion: complementary filter on a 6-axis IMU at 250 Hz.",
-        "Controller: PID on pitch rate, outer proportional loop on pitch angle.",
-        "Model check: simulated step response compared against the logged flight response.",
-      ]),
-    ],
-    build: [
-      block(
-        "The controller board is a four-layer 60 × 60 mm PCB carrying an STM32F4, IMU, barometer, GNSS receiver and eight servo outputs, designed in KiCad. Firmware is bare-metal C with a fixed-rate scheduler so the loop timing is deterministic.",
-      ),
-    ],
-    test: [
-      block(
-        "Bench tests on a pitch gimbal confirmed the loop response, then three flights on the trainer airframe logged the real step response. The measured overshoot was 17 %, slightly above the model, traced to servo slew-rate limiting at large deflections.",
-      ),
     ],
   },
   {
@@ -126,24 +101,7 @@ export const placeholderProjects: Project[] = [
       "Three-phase back-EMF and the six commutation windows",
     ),
     isExample: true,
-    role: "Electronics and firmware",
-    gallery: [fig("brushless-esc.svg", "ESC figure", "Back-EMF and commutation")],
     links: [{ label: "Schematics and firmware", url: "https://github.com/your-handle/esc" }],
-    analysis: [
-      block(
-        "The motor was modelled as a trapezoidal back-EMF machine. Commutation timing was derived from the Hall-sensor states, and the MOSFET switching losses were estimated for a 20 kHz PWM to size the heatsinking.",
-      ),
-    ],
-    build: [
-      block(
-        "A two-layer board with a three-phase MOSFET bridge, gate drivers, current-sense shunt and a small microcontroller. The firmware runs six-step commutation with a current limit.",
-      ),
-    ],
-    test: [
-      block(
-        "On a bench dyno the controller reached 8 000 rpm with 6.1 % torque ripple and 91 % efficiency at 120 W. Ripple at low speed was higher than modelled, which motivated a later sinusoidal-drive revision.",
-      ),
-    ],
   },
   {
     slug: "wind-tunnel-airfoil-pressure-rig",
@@ -159,24 +117,7 @@ export const placeholderProjects: Project[] = [
       "Tap positions on the section and the measured Cp distribution at α = 4°",
     ),
     isExample: true,
-    role: "Rig design, electronics, data analysis",
-    gallery: [fig("airfoil-pressure-rig.svg", "Airfoil rig figure", "Section and Cp")],
     links: [{ label: "Lab report (PDF)", url: "https://example.com/airfoil-report.pdf" }],
-    analysis: [
-      block(
-        "Thin-airfoil theory gave the expected upper-surface pressure distribution for angles of attack up to 8°. Tap positions were chosen to resolve the suction peak near the leading edge.",
-      ),
-    ],
-    build: [
-      block(
-        "The section was 3D-printed in PLA with embedded tubing to the taps, sanded to a smooth finish, and connected to a bank of differential pressure sensors read by a 16-bit ADC.",
-      ),
-    ],
-    test: [
-      block(
-        "Measured Cp matched the theory within 10 % away from the leading edge; the suction peak was lower than predicted, consistent with the tunnel's low Reynolds number.",
-      ),
-    ],
   },
   {
     slug: "solar-mppt-battery-charger",
@@ -192,17 +133,7 @@ export const placeholderProjects: Project[] = [
       "Panel P–V curve, tracked MPP, and the converter topology",
     ),
     isExample: true,
-    gallery: [],
     links: [],
-    analysis: [
-      block(
-        "The panel was modelled with the single-diode equation to find the maximum power point across irradiance levels, which set the converter's operating range.",
-      ),
-    ],
-    build: [
-      block("A 100 kHz synchronous buck converter with a microcontroller running perturb-and-observe tracking."),
-    ],
-    test: [block("Tracking efficiency of 98.4 % was measured on the bench with a programmable source emulating the panel.")],
   },
 ];
 

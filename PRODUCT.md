@@ -32,7 +32,7 @@ A personal e-portfolio that lets an academic reader judge Salman's ability to ta
 
 ## Capabilities and Constraints
 
-Sections confirmed: Home; Projects (index + individual project pages with description, image gallery, YouTube embed, links); About + Skills; Experience + Education (including certificates/awards); Contact with links only (email, LinkedIn, GitHub) and a CV download. No contact form. No blog.
+Sections confirmed: Home; Projects as cards (YouTube video with a play button, or a cover photo, plus a short summary, tags and links; no individual project pages, decided by the owner on 2026-09-18); About + Skills; Experience + Education (including certificates/awards); Contact with links only (email, LinkedIn, GitHub) and a CV download. No contact form. No blog.
 
 Every piece of visible text is editable from the admin panel, including the name, tagline, bio, and contact links. Default tagline (editable): "Electrical & Electronics Engineering student with a passion for aeronautics."
 

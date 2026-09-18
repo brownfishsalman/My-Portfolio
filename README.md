@@ -101,7 +101,7 @@ Every push to GitHub redeploys automatically. Content edits in the admin panel d
 | Name, tagline, degree, university, year | Site settings → Identity |
 | Bio, portrait | Site settings → About |
 | Email, GitHub, LinkedIn, CV (PDF), contact note | Site settings → Contact & CV |
-| A project: cover, gallery, YouTube link, Analysis / Build / Test write-up, links | Projects → open one (or **Create**) |
+| A project: YouTube video (or cover photo), summary, tags, links | Projects → open one (or **Create**) |
 | Which projects appear on the home page | Project → Basics → **Show on home page** (max 3 shown) |
 | Skills | Skill groups |
 | Degree, internships, roles, certificates, awards | Experience & education |
@@ -111,7 +111,7 @@ Tips:
 - Click **Publish** after editing; drafts are not shown on the site.
 - Example content carries an **Example content** tick box; untick it once you have replaced the text, or delete the entry.
 - Images: landscape, at least 1600 px wide, look best for project covers. Fill in the "description for screen readers" field.
-- YouTube: paste the normal `https://www.youtube.com/watch?v=...` link.
+- YouTube: paste the normal `https://www.youtube.com/watch?v=...` or `https://youtu.be/...` link. Visitors see the video's thumbnail with a play button and watch it on the page.
 
 ## Custom domain (later)
 
@@ -120,9 +120,9 @@ Vercel → your project → **Settings → Domains** → add `yourname.com` and 
 ## For developers
 
 ```
-app/                 pages: home, /projects, /projects/[slug], /studio
+app/                 pages: home, /projects, /studio
 components/recorder  the chart-paper shell: bezel (nav), paper, channel band (pens), stamp reveal
-components/          prints, headings, rich text, video
+components/          project cards (video + summary), headings, rich text, video player
 lib/content.ts       all content reads (Sanity, or built-in examples before Sanity is connected)
 lib/placeholders.ts  the example content (also what `npm run seed` loads)
 sanity/schemaTypes   the admin panel's forms

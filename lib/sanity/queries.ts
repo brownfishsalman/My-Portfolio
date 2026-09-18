@@ -14,26 +14,19 @@ export const settingsQuery = defineQuery(`*[_type == "siteSettings"][0]{
   "cvUrl": cv.asset->url
 }`);
 
-const projectSummary = /* groq */ `
-  "slug": slug.current, title, summary, date, "featured": coalesce(featured, false),
+const projectFields = /* groq */ `
+  "slug": coalesce(slug.current, _id), title, summary, date, "featured": coalesce(featured, false),
   "tags": coalesce(tags, []), "isExample": coalesce(isExample, false),
-  "cover": cover${picture}
+  "cover": cover${picture},
+  youtubeUrl,
+  "links": coalesce(links[]{label, url}, [])
 `;
 
-export const projectsQuery = defineQuery(`*[_type == "project" && defined(slug.current)]
-  | order(coalesce(order, 999) asc, date desc){ ${projectSummary} }`);
+export const projectsQuery = defineQuery(`*[_type == "project"]
+  | order(coalesce(order, 999) asc, date desc){ ${projectFields} }`);
 
-export const featuredProjectsQuery = defineQuery(`*[_type == "project" && defined(slug.current) && featured == true]
-  | order(coalesce(order, 999) asc, date desc)[0...3]{ ${projectSummary} }`);
-
-export const projectBySlugQuery = defineQuery(`*[_type == "project" && slug.current == $slug][0]{
-  ${projectSummary},
-  role, youtubeUrl, analysis, build, test,
-  "gallery": coalesce(gallery[]${picture}, []),
-  "links": coalesce(links[]{label, url}, [])
-}`);
-
-export const projectSlugsQuery = defineQuery(`*[_type == "project" && defined(slug.current)].slug.current`);
+export const featuredProjectsQuery = defineQuery(`*[_type == "project" && featured == true]
+  | order(coalesce(order, 999) asc, date desc)[0...3]{ ${projectFields} }`);
 
 export const skillsQuery = defineQuery(`*[_type == "skillGroup"] | order(coalesce(order, 999) asc, _createdAt asc){
   title, "skills": coalesce(skills, [])
